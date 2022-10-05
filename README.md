@@ -41,14 +41,17 @@ Kubernetes Manifests
 ### Architecture
 
 **Basic**: Simple architecture¹.
+
 **HA(High Availability)**: Advanced architecture².
 
 Obs¹: Development and testing mode.
+
 Obs²: Production mode.
 
 ### Providers
 
 **Local**: Using K3S with K3D CLI.
+
 **Remote**: Using Digital Ocean Kubernetes service.
 
 ## Default enabled Services
