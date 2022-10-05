@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcore
+  labels:
+    app: tcore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcore
+  template:
+    metadata:
+      name: tcore
+      labels:
+        app: tcore
+    spec:
+      # Containers
+      containers:
+        - name: tcore
+          image: tagoio/tagocore:0.7-alpine
+          imagePullPolicy: Always
+          args: ["start", "--no-daemon", "--cluster", "$(TCORE_CLUSTER_TOKEN)"]
+          ports:
+            - name: tcore-tcp-port
+              protocol: TCP
+              containerPort: 8888
+            - name: tcore-mqtt-port
+              protocol: TCP
+              containerPort: 1883
+            - name: tcloud-tcp-port
+              protocol: TCP
+              containerPort: 8999
+          env:
+            - name: TCORE_CLUSTER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tcore-secret
+                  key: TCORE_CLUSTER_TOKEN
+          volumeMounts:
+            - mountPath: /var/lib/tagocore/data
+              name: tcore-data
+      # Volumes
+      volumes:
+        - name: tcore-data
+          persistentVolumeClaim:
+            claimName: tcore-data

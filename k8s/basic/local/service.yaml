@@ -1,0 +1,25 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tcore-svc
+  labels:
+    app: tcore
+spec:
+  type: NodePort
+  # App Selector
+  selector:
+    app: tcore
+  # Ports Mapping
+  ports:
+    - name: tcore-tcp-port
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
+    - name: tcore-mqtt-port
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+    - name: tcloud-tcp-port
+      protocol: TCP
+      port: 8999
+      targetPort: 8999

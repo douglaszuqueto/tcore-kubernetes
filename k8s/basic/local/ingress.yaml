@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tcore-ingress
+  labels:
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: tcore.pc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tcore-svc
+                port:
+                  number: 8888
+    # - host: tcore.pc
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: tcore-svc
+    #             port:
+    #               number: 8999
